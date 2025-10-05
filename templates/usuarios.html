@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Usuários</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="usuarios-page">
+        <h1>Usuários Cadastrados</h1>
+
+        <div class="add-user">
+            <a class="botao" href="{{ url_for('adicionar_usuario') }}">Adicionar Novo Usuário</a>
+        </div>
+
+        <table class="usuarios-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.id }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td class="acoes">
+                        <a class="botao" href="{{ url_for('editar_usuario', id=usuario.id) }}">Editar</a>
+
+                        <form class="delete-form" action="{{ url_for('deletar_usuario') }}" method="post">
+                            <input type="hidden" name="email" value="{{ usuario.email }}">
+                            <button class="botao delete-botao" type="submit"
+                                onclick="return confirm('Tem certeza que deseja deletar este usuário?')">Deletar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

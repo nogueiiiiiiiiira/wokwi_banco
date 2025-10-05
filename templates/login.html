@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Login - Sistema IoT</title>
+</head>
+<body>
+    <div class="container">
+        <form action="/validar_usuario" method="post" class="form-login">
+            <h3>🔐 Login - Sistema IoT</h3>
+            <input type="email" name="usuario" placeholder="Insira seu email:" required>
+            <input type="password" name="password" placeholder="Insira sua senha:" required>
+            <button type="submit">Logar</button>
+        </form>
+    </div>
+    {% if erro %}
+    
+    <script>
+        alert("Credenciais inválidas!");
+        // limpa os campos
+        document.querySelector('input[name="usuario"]').value = '';
+        document.querySelector('input[name="password"]').value = '';
+    </script>
+    {% endif %}
+</body>
+</html>
