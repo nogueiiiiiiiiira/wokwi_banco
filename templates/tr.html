@@ -1,41 +1,30 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tempo Real - Sistema IoT</title>
-    <link rel="stylesheet" href="/static/style.css">
-    <script src="/static/script.js"></script>
-</head>
+{% block title %}Controle LED - Sistema IoT{% endblock %}
 
-<body>
-    <div class="container">
-        <h1>Monitoramento em Tempo Real</h1>
+{% block head_extra %}
+{% endblock %}
 
-        <nav class="menu">
-            <a href="/home">🏠 Home</a>
-            <a href="/publicar">🔧 Controle LED</a>
-        </nav>
+{% block content %}
+{{ super() }}
 
-        <button onclick="atualiza_dados()">Atualizar Dados</button>
+<div class="container">
+    <h1>Monitoramento em Tempo Real</h1>
 
-        <br>
-        <br>
+    <button onclick="atualiza_dados()">Atualizar Dados</button>
 
-        <div class="sensor-card">
-            <h2>Temperatura</h2>
-            <div id="valor_temperatura">{{ values.temperatura }}</div>
-            <div>°C</div>
-        </div>
+    <br><br>
 
-        <div class="sensor-card">
-            <h2>Umidade</h2>
-            <div id="valor_umidade">{{ values.umidade }}</div>
-            <div>%</div>
-        </div>
-
+    <div class="sensor-card">
+        <h2>Temperatura</h2>
+        <div id="valor_temperatura">{{ values.temperatura }}</div>
+        <div>°C</div>
     </div>
-</body>
 
-</html>
+    <div class="sensor-card">
+        <h2>Umidade</h2>
+        <div id="valor_umidade">{{ values.umidade }}</div>
+        <div>%</div>
+    </div>
+</div>
+{% endblock %}

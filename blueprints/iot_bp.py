@@ -8,7 +8,7 @@ iot_bp = Blueprint('iot_bp', __name__)
 def login_required(route):
     def wrapper(*args, **kwargs):
         if 'usuario' not in session:
-            return redirect(url_for('login_bp.login_page'))
+            return redirect(url_for('login_bp.login'))
         return route(*args, **kwargs)
     wrapper.__name__ = route.__name__
     return wrapper

@@ -3,16 +3,10 @@
 {% block title %}Controle LED - Sistema IoT{% endblock %}
 
 {% block head_extra %}
-<script src="{{ url_for('static', filename='script.js') }}"></script>
 {% endblock %}
 
 {% block content %}
-<h1>Controle do LED</h1>
-
-<nav class="menu">
-    <a href="/home">🏠 Home</a>
-    <a href="/tempo_real">📊 Tempo Real</a>
-</nav>
+<div class="container">
 
 <div id="status-led">
     {% if led_status == 1 %}
@@ -26,9 +20,5 @@
     <button onclick="publicar_led(1)" id="ligar_botao">LIGAR LED</button>
     <button onclick="publicar_led(0)" id="desligar_botao">DESLIGAR LED</button>
 </div>
-<center>
-    <br>
-    <br>
-    <button onclick="window.location.href='/home'">Voltar</button>
-</center>
+</div>
 {% endblock %}

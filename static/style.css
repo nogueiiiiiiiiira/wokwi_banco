@@ -9,16 +9,26 @@ body {
     background: linear-gradient(135deg, #e0e7ff, #f8f9fb);
     color: #333;
     line-height: 1.6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
+    align-items: center;
     padding: 2rem;
+}
+
+header .container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .container {
     max-width: 900px;
     width: 100%;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 h1,
@@ -26,10 +36,12 @@ h2,
 h3 {
     color: #222;
     margin-bottom: 0.5rem;
+    text-align: center;
 }
 
 p {
     color: #555;
+    text-align: center;
 }
 
 a {
@@ -50,7 +62,8 @@ a:focus {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1rem;
-    margin: 2rem 0;
+    margin: 2rem auto;
+    max-width: 900px;
 }
 
 .card {
@@ -160,6 +173,7 @@ form input:focus {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .menu a {
@@ -332,7 +346,6 @@ form input:focus {
 
 .botoes .botao.cancelar-botao {
     display: inline-flex;
-    /* força o link a se comportar como botão */
     align-items: center;
     justify-content: center;
     height: 36px;

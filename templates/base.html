@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +7,16 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     {% block head_extra %}{% endblock %}
 </head>
-
 <body>
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
-
-    {% block scripts %}{% endblock %}
+    <header>
+    <nav class="menu">
+        <a href="/home">🏠 Home</a>
+        <a href="/tempo_real">📊 Tempo Real</a>
+        <a href="/publicar">🔧 Controle LED</a>
+        <a href="/usuarios">👥 Usuários</a>
+        <a href="{{ url_for('login_bp.logout') }}">🚪 Logout</a>
+    </nav>
+</header>
+{% block content %}{% endblock %}
 </body>
 </html>
