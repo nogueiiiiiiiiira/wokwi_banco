@@ -1,32 +1,32 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style.css">
-    <title>Home - Sistema IoT</title>
-</head>
-<body>
-    <div class="container">
-        <h1>🏠 Sistema IoT - Dashboard</h1>
-        <p>Selecione uma das opções abaixo:</p>
-        
-        <div class="cards">
-            <a href="/tempo_real" class="card">
-                <div class="icon">📊</div>
-                <h3>Monitoramento em Tempo Real</h3>
-                <p>Visualize dados dos sensores</p>
-            </a>
-            
-            <a href="/publish" class="card">
-                <div class="icon">🔧</div>
-                <h3>Controle de Atuadores</h3>
-                <p>Controle o LED</p>
-            </a>
-        </div>
-        <center>
-            <button onclick="window.location.href='/'">Voltar</button>
-        </center>
-    </div>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Home - Sistema IoT{% endblock %}
+
+{% block content %}
+<h1> 🏥 Hospital Cajuru </h1>
+<p>Selecione uma das opções abaixo:</p>
+
+<div class="cards">
+    <a href="/tempo_real" class="card">
+        <div class="icon">📊</div>
+        <h3>Monitoramento em Tempo Real</h3>
+        <p>Visualize dados dos sensores</p>
+    </a>
+
+    <a href="/publicar" class="card">
+        <div class="icon">🔧</div>
+        <h3>Controle de Atuadores</h3>
+        <p>Controle o LED</p>
+    </a>
+
+    <a href="/usuarios" class="card">
+        <div class="icon">👥</div>
+        <h3>Gerenciamento de Usuários</h3>
+        <p>Adicionar, editar ou remover usuários</p>
+
+    </a>
+</div>
+<center>
+    <button onclick="window.location.href='/'">Voltar</button>
+</center>
+{% endblock %}

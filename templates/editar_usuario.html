@@ -1,26 +1,14 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+{% extends "form_base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Editar Usuário</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
+{% block title %}Editar Usuário{% endblock %}
+{% block form_title %}🔐 Editar - Sistema IoT{% endblock %}
 
-<body>
-    <div class="container">
-        <form class="form-login" action="{{ url_for('editar_usuario', id=usuario.id) }}" method="post">
-            <h3>🔐 Editar - Sistema IoT</h3>
-            <input placeholder="Insira seu novo email: " id="email" name="email" value="{{ usuario.email }}" required>
-            <input placeholder="Insira sua nova senha: " id="password" name="password" placeholder="Nova senha"
-                required>
+{% block form_fields %}
+<input placeholder="Novo email:" id="email" name="email" value="{{ usuario.email }}" required>
+<input type="password" id="password" name="password" placeholder="Nova senha" required>
+{% endblock %}
 
-            <div class="botoes">
-                <button type="submit" class="botao">Salvar</button>
-                <a href="{{ url_for('listar_usuarios') }}" class="botao cancelar-botao">Cancelar</a>
-            </div>
-        </form>
-    </div>
-</body>
-
-</html>
+{% block form_buttons %}
+<button type="submit" class="botao">Salvar</button>
+<a href="{{ url_for('login_bp.listar_usuarios') }}" class="botao cancelar-botao">Cancelar</a>
+{% endblock %}

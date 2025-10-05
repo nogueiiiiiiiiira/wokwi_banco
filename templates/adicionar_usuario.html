@@ -1,25 +1,14 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+{% extends "form_base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Adicionar Usuário</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
+{% block title %}Adicionar Usuário{% endblock %}
+{% block form_title %}Adicionar Novo Usuário{% endblock %}
 
-<body>
-    <div class="container">
-        <form class="form-login" action="{{ url_for('adicionar_usuario') }}" method="post">
-            <h1>Adicionar Novo Usuário</h1>
-            <input type="email" id="email" name="email" placeholder="Digite o seu email: " required>
-            <input type="password" id="password" name="password" placeholder="Digite a sua senha: " required>
+{% block form_fields %}
+<input type="email" id="email" name="email" placeholder="Digite o seu email:" required>
+<input type="password" id="password" name="password" placeholder="Digite a sua senha:" required>
+{% endblock %}
 
-            <div class="botoes">
-                <button type="submit" class="botao">Adicionar</button>
-                <a href="{{ url_for('listar_usuarios') }}" class="botao cancelar-botao">Cancelar</a>
-            </div>
-        </form>
-    </div>
-</body>
-
-</html>
+{% block form_buttons %}
+<button type="submit" class="botao">Adicionar</button>
+<a href="{{ url_for('login_bp.listar_usuarios') }}" class="botao cancelar-botao">Cancelar</a>
+{% endblock %}

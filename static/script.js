@@ -23,37 +23,37 @@ function atualiza_dados() {
     const umidAtual = valor_umidade ? valor_umidade.textContent : null;
 
     // envia comando para solicitar atualização ao ESP
-    fetch('/publish_message', {
+    fetch('/publicar_mensagem', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ topic: '/aula_flask/atualizar', message: '1' })
+        body: JSON.stringify({ topic: '/aula_flask/atualizar', mensagem: '1' })
     })
-    .then(response => response.json())
-    .then(() => {
-        // função para tentar buscar os dados até que mudem
-        const tentarAtualizar = () => {
-            fetch('/get_sensor_data')
-                .then(response => response.json())
-                .then(data => {
-                    const novaTemp = formata_numero(data.temperatura);
-                    const novaUmid = formata_numero(data.umidade);
+        .then(response => response.json())
+        .then(() => {
+            // função para tentar buscar os dados até que mudem
+            const tentarAtualizar = () => {
+                fetch('/listar_dados_sensores')
+                    .then(response => response.json())
+                    .then(data => {
+                        const novaTemp = formata_numero(data.temperatura);
+                        const novaUmid = formata_numero(data.umidade);
 
-                    // se os dados mudaram, atualiza a tela
-                    if (novaTemp !== tempAtual || novaUmid !== umidAtual) {
-                        if (valor_temperatura) valor_temperatura.textContent = novaTemp;
-                        if (valor_umidade) valor_umidade.textContent = novaUmid;
-                    } else {
-                        // se não mudou, tenta novamente em 500ms
-                        setTimeout(tentarAtualizar, 500);
-                    }
-                })
-                .catch(err => console.log('Erro ao buscar dados: ' + err.message));
-        };
+                        // se os dados mudaram, atualiza a tela
+                        if (novaTemp !== tempAtual || novaUmid !== umidAtual) {
+                            if (valor_temperatura) valor_temperatura.textContent = novaTemp;
+                            if (valor_umidade) valor_umidade.textContent = novaUmid;
+                        } else {
+                            // se não mudou, tenta novamente em 500ms
+                            setTimeout(tentarAtualizar, 500);
+                        }
+                    })
+                    .catch(err => console.log('Erro ao buscar dados: ' + err.mensagem));
+            };
 
-        // inicia a tentativa de atualização
-        tentarAtualizar();
-    })
-    .catch(err => console.log('Erro ao enviar comando: ' + err.message));
+            // inicia a tentativa de atualização
+            tentarAtualizar();
+        })
+        .catch(err => console.log('Erro ao enviar comando: ' + err.mensagem));
 }
 
 // publica comando LED
@@ -66,10 +66,10 @@ function publicar_led(estado) {
     if (ligar_botao) ligar_botao.disabled = true;
     if (desligar_botao) desligar_botao.disabled = true;
 
-    fetch('/publish_message', {
+    fetch('/publicar_mensagem', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ topic: '/aula_flask/led', message: estado.toString() })
+        body: JSON.stringify({ topic: '/aula_flask/led', mensagem: estado.toString() })
     })
         .then(response => {
             if (!response.ok) {
@@ -81,7 +81,7 @@ function publicar_led(estado) {
             atualiza_led(data.led_status);
         })
         .catch(err => {
-            console.log('Erro ao publicar: ' + err.message, 'error');
+            console.log('Erro ao publicar: ' + err.mensagem, 'error');
         })
         .finally(() => {
             // Reabilitar botões

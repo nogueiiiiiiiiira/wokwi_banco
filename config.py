@@ -1,0 +1,10 @@
+import os
+
+SECRET_KEY = os.urandom(24)
+
+MQTT_BROKER_URL = 'mqtt-dashboard.com'
+MQTT_BROKER_PORT = 1883
+MQTT_USERNAME = ''
+MQTT_PASSWORD = ''
+MQTT_KEEPALIVE = 60
+MQTT_TLS_ENABLED = False
