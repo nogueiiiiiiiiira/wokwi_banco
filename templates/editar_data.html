@@ -1,0 +1,13 @@
+{% extends "form_base.html" %}
+{% block title %}Editar Data{% endblock %}
+{% block form_title %}Editar Data{% endblock %}
+
+{% block form_fields %}
+<input type="text" id="evento" name="evento" value="{{ data.evento }}" required>
+<input type="text" id="descricao" name="descricao" value="{{ data.descricao }}" required>
+{% endblock %}
+
+{% block form_buttons %}
+<button type="submit" class="botao">Salvar</button>
+<a href="{{ url_for('datas_bp.listar_datas') }}" class="botao cancelar-botao">Cancelar</a>
+{% endblock %}

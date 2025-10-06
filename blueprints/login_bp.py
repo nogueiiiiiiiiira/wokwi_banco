@@ -2,11 +2,12 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from db import conexao
 import mysql.connector
 
+users_dict = {'admin@gmail.com': '1234'}
+
 login_bp = Blueprint('login_bp', __name__)
 
 @login_bp.route('/login')
 def login():
-    # action_url aponta para a rota de validação
     return render_template('login.html', erro=False, action_url=url_for('login_bp.validar_usuario'))
 
 
@@ -14,6 +15,10 @@ def login():
 def validar_usuario():
     usuario = request.form['usuario']
     password = request.form['password']
+
+    if usuario in users_dict and users_dict[usuario] == password:
+        session['usuario'] = usuario
+        return redirect(url_for('iot_bp.home'))
 
     conn = conexao()
     if conn is None:

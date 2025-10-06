@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Datas Cadastradas{% endblock %}
+
+{% block content %}
+<div class="datas-page">
+    <h1>Datas Cadastradas</h1>
+
+    <div class="add-data">
+        <a class="botao" href="{{ url_for('datas_bp.adicionar_data') }}">Adicionar Nova Data</a>
+    </div>
+
+    <table class="datas-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Evento</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in datas %}
+            <tr>
+                <td>{{ data.id }}</td>
+                <td>{{ data.evento }}</td>
+                <td class="acoes">
+                    <a class="botao" href="{{ url_for('datas_bp.editar_data', id=data.id) }}">Editar</a>
+
+                    <form class="delete-form" action="{{ url_for('datas_bp.deletar_data') }}" method="post">
+                        <input type="hidden" name="evento" value="{{ data.evento }}">
+                        <button class="botao delete-botao" type="submit"
+                            onclick="return confirm('Tem certeza que deseja deletar esta data?')">Deletar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

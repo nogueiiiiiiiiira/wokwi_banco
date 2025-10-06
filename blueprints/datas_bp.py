@@ -2,85 +2,47 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from db import conexao
 import mysql.connector
 
-login_bp = Blueprint('login_bp', __name__)
-
-@login_bp.route('/login')
-def login():
-    # action_url aponta para a rota de validação
-    return render_template('login.html', erro=False, action_url=url_for('login_bp.validar_usuario'))
-
-
-@login_bp.route('/validar_usuario', methods=['POST'])
-def validar_usuario():
-    usuario = request.form['usuario']
-    password = request.form['password']
-
-    conn = conexao()
-    if conn is None:
-        return "Erro ao conectar ao banco de dados", 500
-
-    try:
-        cursor = conn.cursor()
-        cursor.execute("SELECT senha FROM usuarios WHERE email = %s", (usuario,))
-        user = cursor.fetchone()
-        if user and user[0] == password:
-            session['usuario'] = usuario
-            return redirect(url_for('iot_bp.home'))  
-        else:
-            return render_template('login.html', erro=True, action_url=url_for('login_bp.validar_usuario'))
-    except mysql.connector.Error as err:
-        print("[ERRO MYSQL]", err)
-        return "Erro no banco de dados", 500
-    finally:
-        cursor.close()
-        conn.close()
-
-
-@login_bp.route('/logout')
-def logout():
-    session.pop('usuario', None)  # limpa a sessão do usuário
-    return redirect(url_for('login_bp.login'))
-
+datas_bp = Blueprint('datas_bp', __name__)
 
 # CRUD
-@login_bp.route('/usuarios')
-def listar_usuarios():
+@datas_bp.route('/datas')
+def listar_datas():
     if 'usuario' not in session:
         return redirect(url_for('login_bp.login'))
 
-    usuarios = []
+    datas = []
     conn = conexao()
     if conn:
         try:
             cursor = conn.cursor()
-            cursor.execute("SELECT id, email FROM usuarios ORDER BY id ASC")
-            usuarios = [{'id': row[0], 'email': row[1]} for row in cursor.fetchall()]
+            cursor.execute("SELECT id, evento FROM datas ORDER BY id ASC")
+            datas = [{'id': row[0], 'evento': row[1]} for row in cursor.fetchall()]
         except mysql.connector.Error as err:
             print("[ERRO MYSQL]", err)
         finally:
             cursor.close()
             conn.close()
 
-    return render_template("usuarios.html", usuarios=usuarios)
+    return render_template("datas.html", datas=datas)
 
 
-@login_bp.route('/adicionar_usuario', methods=['GET', 'POST'])
-def adicionar_usuario():
+@datas_bp.route('/adicionar_data', methods=['GET', 'POST'])
+def adicionar_data():
     if 'usuario' not in session:
         return redirect(url_for('login_bp.login'))
 
     if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
+        evento = request.form.get('evento')
+        descricao = request.form.get('descricao')
 
-        if not email or not password:
+        if not evento or not descricao:
             return "Dados inválidos", 400
 
         conn = conexao()
         if conn:
             try:
                 cursor = conn.cursor()
-                cursor.execute("INSERT INTO usuarios (email, senha) VALUES (%s, %s)", (email, password))
+                cursor.execute("INSERT INTO datas (evento, descricao) VALUES (%s, %s)", (evento, descricao))
                 conn.commit()
             except mysql.connector.Error as err:
                 print("[ERRO MYSQL]", err)
@@ -89,25 +51,25 @@ def adicionar_usuario():
                 cursor.close()
                 conn.close()
 
-        return redirect(url_for('login_bp.listar_usuarios'))
+        return redirect(url_for('datas_bp.listar_datas'))
 
-    return render_template('adicionar_usuario.html', action_url=url_for('login_bp.adicionar_usuario'))
+    return render_template('adicionar_data.html', action_url=url_for('datas_bp.adicionar_data'))
 
 
-@login_bp.route('/deletar_usuario', methods=['POST'])
-def deletar_usuario():
+@datas_bp.route('/deletar_data', methods=['POST'])
+def deletar_data():
     if 'usuario' not in session:
         return redirect(url_for('login_bp.login'))
 
-    email = request.form.get('email')
-    if not email:
-        return "Usuário inválido", 400
+    evento = request.form.get('evento')
+    if not evento:
+        return "Evento inválido", 400
 
     conn = conexao()
     if conn:
         try:
             cursor = conn.cursor()
-            cursor.execute("DELETE FROM usuarios WHERE email = %s", (email,))
+            cursor.execute("DELETE FROM datas WHERE evento = %s", (evento,))
             conn.commit()
         except mysql.connector.Error as err:
             print("[ERRO MYSQL]", err)
@@ -116,11 +78,11 @@ def deletar_usuario():
             cursor.close()
             conn.close()
 
-    return redirect(url_for('login_bp.listar_usuarios'))
+    return redirect(url_for('datas_bp.listar_datas'))
 
 
-@login_bp.route('/editar_usuario/<int:id>', methods=['GET', 'POST'])
-def editar_usuario(id):
+@datas_bp.route('/editar_data/<int:id>', methods=['GET', 'POST'])
+def editar_data(id):
     if 'usuario' not in session:
         return redirect(url_for('login_bp.login'))
 
@@ -128,14 +90,14 @@ def editar_usuario(id):
     cursor = conn.cursor()
 
     if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
+        evento = request.form.get('evento')
+        descricao = request.form.get('descricao')
 
-        if not email or not password:
+        if not evento or not descricao:
             return "Dados inválidos", 400
 
         try:
-            cursor.execute("UPDATE usuarios SET email=%s, senha=%s WHERE id=%s", (email, password, id))
+            cursor.execute("UPDATE datas SET evento=%s, descricao=%s WHERE id=%s", (evento, descricao, id))
             conn.commit()
         except mysql.connector.Error as err:
             print("[ERRO MYSQL]", err)
@@ -144,15 +106,15 @@ def editar_usuario(id):
             cursor.close()
             conn.close()
 
-        return redirect(url_for('login_bp.listar_usuarios'))
+        return redirect(url_for('datas_bp.listar_datas'))
 
-    cursor.execute("SELECT id, email FROM usuarios WHERE id=%s", (id,))
-    usuario = cursor.fetchone()
+    cursor.execute("SELECT id, evento, descricao FROM datas WHERE id=%s", (id,))
+    data = cursor.fetchone()
     cursor.close()
     conn.close()
 
     return render_template(
-        'editar_usuario.html',
-        usuario={'id': usuario[0], 'email': usuario[1]},
-        action_url=url_for('login_bp.editar_usuario', id=id)
+        'editar_data.html',
+        data={'id': data[0], 'evento': data[1], 'descricao': data[2]},
+        action_url=url_for('datas_bp.editar_data', id=id)
     )
