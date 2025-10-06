@@ -1,3 +1,0 @@
-- [x] Center the navigation menu by adding justify-content: center to .menu
-- [x] Center the text in h1 and p by adding text-align: center
-- [x] Center the cards grid by adding max-width: 900px; margin: 2rem auto to .cards
