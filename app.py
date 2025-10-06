@@ -6,6 +6,7 @@ import globals_iot
 # blueprints
 from blueprints.login_bp import login_bp
 from blueprints.iot_bp import iot_bp
+from blueprints.datas_bp import datas_bp
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -24,6 +25,7 @@ globals_iot.topic_subscribe = "/aula_flask/#"
 # registrar Blueprints
 app.register_blueprint(login_bp)
 app.register_blueprint(iot_bp)
+app.register_blueprint(datas_bp)
 
 # rota principal
 @app.route('/')
