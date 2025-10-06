@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="form-container">
+<div class="{% block container_class %}form-container{% endblock %}">
     <form class="form-login" action="{{ action_url }}" method="post">
         <h1>{% block form_title %}Formulário{% endblock %}</h1>
 

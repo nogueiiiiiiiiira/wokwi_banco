@@ -1,5 +1,9 @@
 {% extends "form_base.html" %}
 
+{% block nav %}{% endblock %}
+
+{% block container_class %}form-container login-center{% endblock %}
+
 {% block title %}Login - Sistema IoT{% endblock %}
 {% block form_title %}🔐 Login - Sistema IoT{% endblock %}
 
@@ -9,6 +13,8 @@
 {% endblock %}
 
 {% block form_buttons %}
+<br>
+<br>
 <button type="submit" class="botao">Logar</button>
 {% endblock %}
 

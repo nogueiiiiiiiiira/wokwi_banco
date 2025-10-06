@@ -9,6 +9,7 @@
 </head>
 <body>
     <header>
+    {% block nav %}
     <nav class="menu">
         <a href="/home">🏠 Home</a>
         <a href="/tempo_real">📊 Tempo Real</a>
@@ -16,6 +17,7 @@
         <a href="/usuarios">👥 Usuários</a>
         <a href="{{ url_for('login_bp.logout') }}">🚪 Logout</a>
     </nav>
+    {% endblock %}
 </header>
 {% block content %}{% endblock %}
 </body>
